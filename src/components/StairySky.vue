@@ -19,7 +19,7 @@ const setupStarStyles = () => {
     const x = randomFromInterval(i, skyWidth - i);
     const y = randomFromInterval(i, skyHeight - i);
 
-    starGlow.style.animation = `star-pulse ${(i * 0.3) + randomFromInterval(5, 10)}s ease-in-out running`;
+    starGlow.style.animation = `star-pulse ${(i * 0.3) + randomFromInterval(5, 10)}s ease-in-out infinite`;
     starGlow.style.height = `${size}px`;
     starGlow.style.width = `${size}px`;
     star.style.left = `${x}px`;
@@ -41,6 +41,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .star {
   position: absolute;
+  z-index: 2;
 }
 
 .animated-star {
