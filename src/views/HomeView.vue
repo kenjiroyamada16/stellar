@@ -28,8 +28,10 @@ import { lines } from '@/helpers/story_line';
 import { handwriteText } from '@/helpers/text_constructor';
 import { onMounted, ref, Ref, watch } from 'vue';
 import { LineKinds, IStoryLine } from '@/interfaces/story_line';
+import { nullableNumber } from '@/helpers/nullable_extension';
 
-const currentLineId = ref(1);
+const emit = defineEmits(['stars-opacity', 'show-main-star']);
+const currentLineId = ref(14);
 const isWriting = ref(false);
 const title: Ref<HTMLElement | null> = ref(null);
 const content: Ref<HTMLElement | null> = ref(null);
@@ -45,34 +47,53 @@ const handleStoryLine = (lineId: number) => {
 
   if (!currentLine) return;
 
+  const initialDelay = currentLine.initialDelay;
+  const endDelay = currentLine.endDelay;
+
   if (currentLine.id == 2) {
     tip.value.textContent = '';
   }
+
+  if (currentLine.id >= 14 && currentLine.id <= 17) {
+    const opacity = `${1 - (currentLine.id - 14) / 3}`
+
+    emit('stars-opacity', opacity);
+  }
+
+  if (currentLine.id == 18) emit('show-main-star');
 
   switch (currentLine.kind) {
     case LineKinds.line:
       contentContainer.style.opacity = '1';
       titleContainer.style.opacity = '0';
-      writeText(currentLine.text, content.value);
+      writeText(currentLine.text, content.value, initialDelay, endDelay);
       break;
     case LineKinds.title:
       contentContainer.style.opacity = '0';
       titleContainer.style.opacity = '1';
-      writeText(currentLine.text, title.value);
+      writeText(currentLine.text, title.value, initialDelay, endDelay);
+      break;
+    case LineKinds.none:
+      contentContainer.style.opacity = '0';
+      titleContainer.style.opacity = '0';
       break;
   }
 
   currentLineId.value = currentLine.nextLineId;
 }
 
-const writeText = (text: string, element: HTMLElement) => {
+const writeText = (
+  text: string, element: HTMLElement, initialDelay: number, endDelay: number,
+) => {
   isWriting.value = true;
 
-  handwriteText(text, element).then(() => {
-    const titleContainer = document.querySelector('.title-container') as HTMLElement;
-
-    isWriting.value = false;
-  })
+  setTimeout(() => {
+    handwriteText(text, element).then(() => {
+      setTimeout(() => {
+        isWriting.value = false;
+      }, nullableNumber(endDelay));
+    })
+  }, nullableNumber(initialDelay));
 }
 
 watch(isWriting, async (isWriting, _) => {
@@ -162,9 +183,11 @@ onMounted(() => {
     word-wrap: break-word;
     word-break: normal;
     width: 100%;
+    white-space: pre;
   }
 
   .content-container {
+    opacity: 0;
     position: relative;
     transition: opacity 0.3s;
     width: 50%;

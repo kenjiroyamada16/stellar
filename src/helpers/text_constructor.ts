@@ -13,6 +13,11 @@ export const handwriteText = async (text: string, element: HTMLElement): Promise
           return;
         }
 
+        if (character === '@') {
+          element.textContent += '\r\n';
+          return;
+        }
+
         element.textContent += character;
         if (i == textCharacters.length - 1) resolve();
       }, i * 100);
