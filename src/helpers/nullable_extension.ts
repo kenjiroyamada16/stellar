@@ -10,4 +10,10 @@ const nullableString = (value: string | null | undefined) => {
   return '';
 }
 
+const nullableBool = (value: boolean | null | undefined) => {
+  if (value != null) return value;
+
+  return false;
+}
+
 export { nullableNumber, nullableString };

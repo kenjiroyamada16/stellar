@@ -1,5 +1,5 @@
-export const handwriteText = async (text: string, element: HTMLElement): Promise<void> => {
-  return new Promise<void>((resolve) => {
+export const handwriteText = async (text: string, element: HTMLElement): Promise<boolean> => {
+  return new Promise<boolean>((resolve) => {
     element.textContent = '';
 
     const textCharacters = text.split('');
@@ -8,6 +8,11 @@ export const handwriteText = async (text: string, element: HTMLElement): Promise
       const character = textCharacters[i];
 
       setTimeout(() => {
+        if (character === '%') {
+          resolve(true);
+          return;
+        }
+
         if (character === '#') {
           element.textContent += '';
           return;
@@ -19,7 +24,7 @@ export const handwriteText = async (text: string, element: HTMLElement): Promise
         }
 
         element.textContent += character;
-        if (i == textCharacters.length - 1) resolve();
+        if (i == textCharacters.length - 1) resolve(false);
       }, i * 100);
     }
   })

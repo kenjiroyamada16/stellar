@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     color: $color_white;
+    user-select: none;
     font-family: $primary_font_family;
 }
 
@@ -39,5 +40,66 @@
   
     50% {
       transform: translate(500%, 20%);
+    }
+  }
+
+  @keyframes shooting-star-right-1 {
+    0% {
+      top: -10%;
+      left: 105%;
+      opacity: 1;
+    }
+    100% {
+      top: 120%;
+      left: -30%;
+      opacity: 0;
+    }
+  }
+
+  @keyframes shooting-star-right-2 {
+    0% {
+      top: 30%;
+      left: 125%;
+      opacity: 1;
+    }
+    100% {
+      top: 120%;
+      left: -10%;
+      opacity: 0;
+    }
+  }
+
+  @keyframes shooting-star-left-1 {
+    0% {
+      top: -10%;
+      left: -10%;
+      opacity: 1;
+    }
+    100% {
+      top: 110%;
+      left: 105%;
+      opacity: 0;
+    }
+  }
+
+  @keyframes shooting-star-left-2 {
+    0% {
+      top: 30%;
+      left: -10%;
+      opacity: 1;
+    }
+    100% {
+      top: 120%;
+      left: 105%;
+      opacity: 0;
+    }
+  }
+  
+  @keyframes star-trail {
+    0% {
+      width: 10px;
+    }
+    100% {
+      width: 200px;
     }
   }

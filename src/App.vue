@@ -2,7 +2,7 @@
   <div class="container">
     <div id="main" class="content">
       <StairySky ref="skyRef" :stars-opacity="starsOpacity" />
-      <RouterView @stars-opacity="defineStarsOpacity" @show-main-star="showStar" />
+      <RouterView @setup-shooting-star="setupShootingStar" @stars-opacity="defineStarsOpacity" @show-main-star="showStar" />
     </div>
   </div>
 </template>
@@ -13,7 +13,13 @@ import { RouterView } from 'vue-router';
 import StairySky from './components/StairySky.vue';
 
 const skyRef = ref();
+
 const starsOpacity = ref('1');
+
+const setupShootingStar = () => {
+  skyRef.value.setShootingStar();
+  starsOpacity.value = '0.7';
+}
 
 const showStar = () => {
   skyRef.value.showStar();
@@ -21,7 +27,6 @@ const showStar = () => {
 
 const defineStarsOpacity = (opacity: string) => {
   starsOpacity.value = opacity;
-  console.log(opacity);
 }
 </script>
 
