@@ -66,8 +66,8 @@ onMounted(() => {
 
   &::before {
     content: '';
-    left: 0;
-    top: 0;
+    left: 40%;
+    top: 40%;
     position: absolute;
     background: #FFFFFF;
     width: 16px;
@@ -78,8 +78,8 @@ onMounted(() => {
 
   &::after {
     content: '';
-    left: 0;
-    top: 0;
+    left: 40%;
+    top: 40%;
     position: absolute;
     background: #FFFFFF;
     width: 16px;

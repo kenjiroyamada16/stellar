@@ -1,8 +1,17 @@
-export const handwriteText = async (text: string, element: HTMLElement): Promise<boolean> => {
-  return new Promise<boolean>((resolve) => {
-    element.textContent = '';
+import { nullableBool } from "./nullable_extension";
 
-    const textCharacters = text.split('');
+export const handwriteText = async (
+  text: string, 
+  element: HTMLElement, 
+  clear?: boolean,
+  starName?: string,
+): Promise<boolean> => {
+  return new Promise<boolean>((resolve) => {
+    if (nullableBool(clear)) {
+      element.textContent = '';
+    }
+
+    const textCharacters = text.replace('+', starName).split('');
 
     for (let i = 0; i < textCharacters.length; i++) {
       const character = textCharacters[i];

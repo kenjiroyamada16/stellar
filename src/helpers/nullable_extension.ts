@@ -16,4 +16,4 @@ const nullableBool = (value: boolean | null | undefined) => {
   return false;
 }
 
-export { nullableNumber, nullableString };
+export { nullableNumber, nullableString, nullableBool };

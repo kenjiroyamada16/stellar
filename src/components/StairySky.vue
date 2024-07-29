@@ -1,13 +1,18 @@
 <template>
   <div class="sky">
-    <div class="main-star-container">
-      <MainStar :has-shadow="false" />
+    <div class="main-stars-container">
+      <div class="primary-star-container">
+        <MainStar :has-shadow="false" />
+      </div>
+      <div v-if="isSecondaryVisible" class="secondary-star-container">
+        <MainStar :has-shadow="false" />
+      </div>
     </div>
     <div class="shooting-star-container">
       <div class="shooting-star"></div>
       <div class="star-trail"></div>
     </div>
-    <div class="star animated-star" v-for="n in starCount" :key="n">
+    <div class="star" v-for="n in starCount" :key="n">
       <div class="star-glow"></div>
     </div>
   </div>
@@ -15,9 +20,46 @@
 
 <script setup lang="ts">
 import MainStar from '@/components/MainStar.vue';
-import { onMounted, ref, watch } from 'vue';
+import { randomFromInterval, round } from '@/helpers/calculations';
+import { onMounted, Ref, ref, watch } from 'vue';
+
+const mainStar: Ref<HTMLElement | null> = ref();
+const hasAscended = ref(false);
+const isSecondaryVisible = ref(false);
 
 const props = defineProps<{ starsOpacity: string }>();
+
+const showAscendedStars = () => {
+  if (!(hasAscended.value)) return;
+
+  const stars = document.querySelectorAll('.star') as NodeListOf<HTMLElement>;
+  
+  stars.forEach(star => {
+    star.style.opacity = '1';
+  });
+}
+
+const ascendStars = () => {
+  const stars = document.querySelectorAll('.star') as NodeListOf<HTMLElement>;
+  mainStar.value.style.transition = 'opacity 3s';
+  mainStar.value.style.opacity = '0';
+  hasAscended.value = true;
+
+  stars.forEach(star => {
+    const starY = star.getBoundingClientRect().y;
+    const starTransition = round((starY / 100) + randomFromInterval(3, 8));
+
+    star.style.transition = `opacity 4s, transform ${starTransition}s`;
+    star.classList.add('ascending-star');
+
+    setTimeout(() => {
+      star.style.opacity = '0';
+      setTimeout(() => {
+        star.classList.remove('ascending-star');
+      }, 10000);
+    }, 20000);
+  });
+}
 
 const setShootingStar = () => {
   const shootingStar = document.querySelector('.shooting-star-container') as HTMLElement;
@@ -32,29 +74,38 @@ const setShootingStar = () => {
     }, 5000);
   }
 
-  alternateShootingStarAnimation();
+  setTimeout(() => {
+    alternateShootingStarAnimation();
+  }, 1500);
 
   setInterval(alternateShootingStarAnimation, randomFromInterval(30, 60));
 }
 
-const showStar = () => {
-  const mainStar = document.querySelector('.main-star-container') as HTMLElement;
+const showStar = (opacity: string) => {
+  const mainStar = document.querySelector('.primary-star-container') as HTMLElement;
 
-  mainStar.style.opacity = '1';
+  mainStar.style.opacity = opacity;
 }
 
 const setupStarStyles = () => {
+  mainStar.value = document.querySelector('.primary-star-container');
   const skyElement = document.querySelector('.sky') as HTMLElement;
   const stars = document.querySelectorAll('.star') as NodeListOf<HTMLElement>;
   const skyHeight = skyElement.clientHeight;
   const skyWidth = skyElement.clientWidth;
+  const shootingStar = document.querySelector('.shooting-star-container') as HTMLElement;
 
   watch(() => props.starsOpacity, (opacity) => {
-    let starsList = Array.from(stars);
+    const starsList = Array.from(stars);
+
+    shootingStar.style.opacity = opacity;
+
     for (let i = 0; i < starsList.length; i++) {
+      let timeout = i * 10;
+
       setTimeout(() => {
         starsList[i].style.opacity = opacity;
-      }, i * 100);
+      }, timeout);
     }
   });
 
@@ -72,19 +123,16 @@ const setupStarStyles = () => {
   });
 }
 
-const randomFromInterval = (min: number, max: number): number => {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
 const starCount = ref(randomFromInterval(50, 100));
 
 defineExpose({
   showStar: showStar,
+  ascendStars: ascendStars,
   setShootingStar: setShootingStar,
+  showAscendedStars: showAscendedStars,
 });
 
 onMounted(() => {
-
   setupStarStyles();
 });
 </script>
@@ -93,19 +141,28 @@ onMounted(() => {
 .star {
   position: absolute;
   transition: opacity 4s;
-  z-index: 2;
+  z-index: 4;
+
+  &.ascending-star {
+    transform: translateY(-120vh);
+  }
+
+  &.animated-star {
+    animation: stars-translate 40s ease-in-out infinite running;
+  }
 }
 
-.main-star-container {
-  left: 46%;
-  top: 10%;
-  opacity: 0;
+.main-stars-container {
+  display: flex;
+  margin: 60px 20px;
+  gap: 52px;
+  justify-content: center;
   transition: opacity 20s;
-  position: absolute;
-}
 
-.animated-star {
-  animation: stars-translate 40s ease-in-out infinite running;
+  .primary-star-container {
+    opacity: 0;
+    transition: 8s;
+  }
 }
 
 .star-glow {
@@ -127,6 +184,7 @@ onMounted(() => {
   position: absolute;
   display: flex;
   width: 200px;
+  top: 120vh;
   justify-content: center;
   align-items: center;
   z-index: 5;
