@@ -372,6 +372,7 @@ onMounted(() => {
   himImageBottom.value.style.backgroundImage = `url(${heImage})`;
 
   setIsFirstRun();
+  setupSky();
 
   backgroundSound.value.src = footsStepsSound;
 
@@ -429,6 +430,11 @@ const checkEnding = (currentLineId: number) => {
 
 const goToMenu = () => {
   router.replace('/end');
+}
+
+const setupSky = () => {
+  emit('show-main-star', '0');
+  emit('stars-opacity', '1');
 }
 </script>
 

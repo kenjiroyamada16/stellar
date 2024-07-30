@@ -981,7 +981,7 @@ export const lines: IStoryLine[] = [
     text: '',
     nextLineId: -1,
     firstOptionLineId: 143,
-    secondOptionLineId: 168,
+    secondOptionLineId: 169,
   },
 
   /// MARK:- Her name
@@ -1129,7 +1129,7 @@ export const lines: IStoryLine[] = [
   {
     id: 165,
     kind: LineKinds.title,
-    text: '"+"###.########',
+    text: '"+"###.#################%',
     nextLineId: 166,
   },
   {
@@ -1153,49 +1153,49 @@ export const lines: IStoryLine[] = [
 
   /// MARK:- Not her name
   {
-    id: 168,
-    kind: LineKinds.line,
-    text: '#######.######.##########.%',
-    nextLineId: 169,
-    talker: 'Estrela',
-  },
-  {
     id: 169,
     kind: LineKinds.line,
-    text: '....+######?',
+    text: '#######.######.##########.%',
     nextLineId: 170,
     talker: 'Estrela',
   },
   {
     id: 170,
     kind: LineKinds.line,
-    text: 'Você.####.####.## não gos%',
+    text: '....+######?',
     nextLineId: 171,
-    talker: '?',
+    talker: 'Estrela',
   },
   {
     id: 171,
     kind: LineKinds.line,
-    text: 'Ei, relaxa! Eu gostei.###### Só##.##.##.## é engraçado.',
+    text: 'Você.####.####.## não gos%',
     nextLineId: 172,
-    talker: 'star_name',
+    talker: '?',
   },
   {
     id: 172,
     kind: LineKinds.line,
-    text: 'Pensar que há pouco eu não tinha um nome e agora eu tenho um tão##.##.##.##### bom.',
+    text: 'Ei, relaxa! Eu gostei.###### Só##.##.##.## é engraçado.',
     nextLineId: 173,
     talker: 'star_name',
   },
   {
     id: 173,
     kind: LineKinds.line,
-    text: 'Sabe####################, até que gosto de você.#########%',
+    text: 'Pensar que há pouco eu não tinha um nome e agora eu tenho um tão##.##.##.##### bom.',
     nextLineId: 174,
     talker: 'star_name',
   },
   {
     id: 174,
+    kind: LineKinds.line,
+    text: 'Sabe####################, até que gosto de você.#########%',
+    nextLineId: 175,
+    talker: 'star_name',
+  },
+  {
+    id: 175,
     kind: LineKinds.none,
     text: '',
     nextLineId: 150,
@@ -1204,34 +1204,34 @@ export const lines: IStoryLine[] = [
 
   // MARK:- Can't fight
   {
-    id: 175,
-    kind: LineKinds.line,
-    text: 'Tudo bem.##.#####.',
-    nextLineId: 176,
-    talker: 'Estrela',
-  },
-  {
     id: 176,
     kind: LineKinds.line,
-    text: 'Mas eu não posso lutar no seu lugar.',
+    text: 'Tudo bem.##.#####.',
     nextLineId: 177,
     talker: 'Estrela',
   },
   {
     id: 177,
     kind: LineKinds.line,
-    text: 'Nos falamos novamente###.###.##. Quando você se livrar desse peso. *** **** ***** ********.',
+    text: 'Mas eu não posso lutar no seu lugar.',
     nextLineId: 178,
     talker: 'Estrela',
   },
   {
     id: 178,
-    kind: LineKinds.narrative,
-    text: 'Ela se foi, murmurando algo que não consegui ouvir.',
+    kind: LineKinds.line,
+    text: 'Nos falamos novamente###.###.##. Quando você se livrar desse peso. *** **** ***** ********.',
     nextLineId: 179,
+    talker: 'Estrela',
   },
   {
     id: 179,
+    kind: LineKinds.narrative,
+    text: 'Ela se foi, murmurando algo que não consegui ouvir.',
+    nextLineId: 180,
+  },
+  {
+    id: 180,
     kind: LineKinds.title,
     isHe: true,
     text: 'Você perdeu.######## Babaca.',
