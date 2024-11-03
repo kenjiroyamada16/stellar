@@ -33,7 +33,7 @@ const showAscendedStars = () => {
   if (!(hasAscended.value)) return;
 
   const stars = document.querySelectorAll('.star') as NodeListOf<HTMLElement>;
-  
+
   stars.forEach(star => {
     star.style.opacity = '1';
   });

@@ -36,6 +36,10 @@
 </script>
 
 <style scoped lang="scss">
+  .v-otp-input :deep(.v-otp-input__field) {
+    font-family: $secondary_font_family;
+  }
+
   .input-error {
     text-align: center;
     margin: 24px;

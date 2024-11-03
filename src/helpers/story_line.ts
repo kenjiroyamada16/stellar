@@ -1129,7 +1129,7 @@ export const lines: IStoryLine[] = [
   {
     id: 165,
     kind: LineKinds.title,
-    text: '"+"###.########',
+    text: '"+"###########.',
     nextLineId: 166,
   },
   {

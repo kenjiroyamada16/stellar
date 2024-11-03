@@ -1,8 +1,8 @@
 import { nullableBool } from "./nullable_extension";
 
 export const handwriteText = async (
-  text: string, 
-  element: HTMLElement, 
+  text: string,
+  element: HTMLElement,
   clear?: boolean,
   starName?: string,
 ): Promise<boolean> => {
