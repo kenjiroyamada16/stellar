@@ -12,7 +12,13 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watch } from 'vue';
+  import router from '@/router';
+  import { useCodeStore } from '@/store/code';
+  import { storeToRefs } from 'pinia';
+  import { onMounted, ref, watch } from 'vue';
+
+  const codeStore = useCodeStore();
+  const { getFetchedCode } = storeToRefs(codeStore);
 
   const showDialog = ref(false);
   const password = ref('');
@@ -23,15 +29,23 @@
   }
 
   watch(password, async (password, _) => {
-    // TODO: Adicionar senha certa
+    inputHasError.value = true;
 
     if (password.length < 6) return;
+    if (getFetchedCode.value != password) return;
 
-    inputHasError.value = true;
+    inputHasError.value = false;
+    codeStore.saveCode(password);
+    setShowDialog(false);
+    router.push({ name: '/memories' });
   });
 
   defineExpose({
     setShowDialog,
+  });
+
+  onMounted(() => {
+    codeStore.fetchSecretCode();
   });
 </script>
 

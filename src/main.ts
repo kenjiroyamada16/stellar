@@ -4,7 +4,7 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import App from './App.vue';
 import router from './router';
 
-import '@/assets/scss/_main.scss';
+import '@/assets/scss/main.scss';
 import vuetify from './plugins/vuetify'
 
 const app = createApp(App);

@@ -61,20 +61,23 @@
   </div>
 </template>
 
-<script setup lang="ts" scoped>
+<script setup lang="ts">
   import mainFavIcon from '/favicon.ico'
   import heImage from '@/assets/images/he-black.png';
   import footsStepsSound from '@/assets/audio/footsteps-dirt.mp3';
   import MainStar from '@/components/MainStar.vue';
   import { lines } from '@/helpers/story_line';
   import { handwriteText } from '@/helpers/text_constructor';
-  import { onMounted, ref, Ref, watch } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
   import { LineKinds, IStoryLine } from '@/interfaces/story_line';
   import { nullableBool, nullableNumber } from '@/helpers/nullable_extension';
   import router from '@/router';
   import { nameVerifier } from '@/helpers/name_verifier';
   import stringToBool from '@/helpers/local_storage_parser';
 
+  const props = defineProps<{
+    initialStoryLineId?: number,
+  }>();
   const emit = defineEmits(['stars-opacity', 'show-main-star', 'setup-shooting-star', 'ascend-stars']);
 
   const starName = ref('');
@@ -82,20 +85,19 @@
   const isInput = ref(false);
   const isWriting = ref(false);
   const isFirstRun = ref(true);
-  const currentLineId = ref(1);
+  const currentLineId = ref(0);
   const soundIsPlaying = ref(false);
-  const himImageTop: Ref<HTMLElement> = ref();
-  const himImageBottom: Ref<HTMLElement> = ref();
-  const himImageContainer: Ref<HTMLElement> = ref();
-  const tip: Ref<HTMLElement | null> = ref(null);
-  const title: Ref<HTMLElement | null> = ref(null);
-  const content: Ref<HTMLElement | null> = ref(null);
-  const talkerLabel: Ref<HTMLElement | null> = ref(null);
-  const tipContainer: Ref<HTMLElement | null> = ref(null);
-  const currentStoryLine: Ref<IStoryLine | null> = ref(null);
-  const backgroundSound: Ref<HTMLAudioElement | null> = ref(null);
-
-  const storyLines: Ref<IStoryLine[] | null> = ref(null);
+  const himImageTop = ref();
+  const himImageBottom = ref();
+  const himImageContainer = ref();
+  const tip = ref();
+  const title = ref();
+  const content = ref();
+  const talkerLabel = ref();
+  const tipContainer = ref();
+  const currentStoryLine = ref();
+  const backgroundSound = ref();
+  const storyLines = ref();
 
   const submitName = (event: KeyboardEvent) => {
     if (event.code != 'Enter' || starName.value.length < 4) return;
@@ -138,7 +140,7 @@
   const handleStoryLine = (lineId: number) => {
     const titleContainer = document.querySelector('.title-container') as HTMLElement;
     const contentContainer = document.querySelector('.content-container') as HTMLElement;
-    const currentLine = storyLines.value.find(line => line.id == lineId);
+    const currentLine = storyLines.value.find((line: IStoryLine) => line.id == lineId);
 
     currentStoryLine.value = currentLine;
 
@@ -333,22 +335,24 @@
     currentLine: IStoryLine, element: HTMLElement,
   ) => {
     isWriting.value = true;
+    element.textContent = '';
 
-    handwriteText(currentLine.text, element, true, starName.value).then((autoContinue) => {
-      setTimeout(() => {
-        if (currentLine.firstOption && currentLine.secondOption) {
-          setupButtons('1');
-          return;
-        }
+    setTimeout(() => {
+      handwriteText(currentLine.text, element, true, starName.value).then((autoContinue) => {
+        setTimeout(() => {
+          if (currentLine.firstOption && currentLine.secondOption) {
+            setupButtons('1');
+            return;
+          }
 
-        if (autoContinue) {
-          handleStoryLine(currentLineId.value);
-        } else {
-          isWriting.value = false;
-        }
-
-      }, nullableNumber(currentLine.endDelay));
-    });
+          if (autoContinue) {
+            handleStoryLine(currentLineId.value);
+          } else {
+            isWriting.value = false;
+          }
+        }, nullableNumber(currentLine.endDelay));
+      });
+    }, nullableNumber(currentLine.initialDelay));
   }
 
   watch(isWriting, async (isWriting, _) => {
@@ -362,6 +366,10 @@
   });
 
   onMounted(() => {
+    if (props.initialStoryLineId) {
+      currentLineId.value = props.initialStoryLineId;
+    }
+
     tip.value = document.querySelector('.key-tip') as HTMLElement;
     title.value = document.querySelector('.story-title') as HTMLElement;
     content.value = document.querySelector('.story-text') as HTMLElement;

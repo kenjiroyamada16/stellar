@@ -1,9 +1,3 @@
-const stringToBool = (key?: string): boolean => {
-  if (key == 'true') {
-    return true;
-  } else {
-    return false;
-  }
-}
+const stringToBool = (key?: string): boolean => key == 'true';
 
 export default stringToBool;

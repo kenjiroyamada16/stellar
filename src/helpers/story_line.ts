@@ -3,12 +3,20 @@ import { LineKinds, IStoryLine } from "@/interfaces/story_line";
 export const lines: IStoryLine[] = [
   // MARK: - Main Story
   {
+    id: 0,
+    kind: LineKinds.title,
+    text: '☆',
+    talker: null,
+    nextLineId: 1,
+  },
+  {
     id: 1,
     kind: LineKinds.title,
     text: 'O universo não me acolheu.',
     isHe: true,
     talker: null,
     nextLineId: 2,
+    initialDelay: 2000,
   },
   {
     id: 2,
@@ -676,7 +684,7 @@ export const lines: IStoryLine[] = [
   {
     id: 97,
     kind: LineKinds.title,
-    text: 'Te amo mais do que nunca.',
+    text: 'Te amo#########, como nunca amei alguém.',
     nextLineId: 98,
   },
   {
