@@ -1,4 +1,5 @@
 <template>
+  <div ref="cursor" :class="['custom-cursor', { hidden: !showCursor, active: cursorActive }]"></div>
   <v-app>
     <div class="container">
       <div id="main" class="content">
@@ -12,19 +13,22 @@
       </div>
     </div>
 
-    <PasswordDialog ref="passwordDialog"/>
+    <PasswordDialog ref="passwordDialog" />
   </v-app>
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { onMounted, ref } from 'vue';
   import { RouterView } from 'vue-router';
   import PasswordDialog from './components/PasswordDialog.vue';
   import StairySky from './components/StairySky.vue';
 
   const skyRef = ref();
+  const showCursor = ref(false);
+  const cursorActive = ref(false);
   const starsOpacity = ref('1');
   const passwordDialog = ref();
+  const cursor = ref<HTMLElement>();
 
   const showPasswordDialog = () => {
     passwordDialog.value.setShowDialog(true);
@@ -46,6 +50,20 @@
   const ascendStars = () => {
     skyRef.value.ascendStars();
   }
+
+  onMounted(() => {
+    document.addEventListener('mousemove', (e) => {
+      if (!cursor.value) return;
+
+      cursor.value.style.left = e.clientX + 'px';
+      cursor.value.style.top = e.clientY + 'px';
+    });
+
+    document.addEventListener('mousedown', () => cursorActive.value = true);
+    document.addEventListener('mouseup', () => cursorActive.value = false);
+    document.addEventListener('mouseenter', () => showCursor.value = true);
+    document.addEventListener('mouseleave', () => showCursor.value = false);
+  });
 </script>
 
 <style lang="scss" scoped>

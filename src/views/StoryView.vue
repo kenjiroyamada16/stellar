@@ -242,7 +242,7 @@
     if (currentLine.id == 161) {
       setTimeout(() => {
         emit('show-main-star', '1');
-      }, 900);
+      }, 1500);
     }
 
     if (currentLine.id == 180) {
@@ -457,7 +457,7 @@
     user-select: none;
 
     .key-tip {
-      font-family: $third_font_family;
+      font-family: $primary_font_family;
     }
 
     .tip-container {

@@ -6,7 +6,7 @@
   import { onMounted } from 'vue';
 
   const props = defineProps<{
-    hasShadow: boolean,
+    hasShadow?: boolean,
   }>();
 
   onMounted(() => {

@@ -4,6 +4,38 @@
   box-sizing: border-box;
   color: $color_white;
   font-family: $primary_font_family;
+  cursor: none !important;
+}
+
+.custom-cursor {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  pointer-events: none;
+  position: fixed;
+  z-index: 999999;
+  mix-blend-mode: difference;
+  background-color: white;
+  transition: width 0.4s, height 0.4s, opacity 0.5s, background 0.3s;
+  transform: translate(-50%, -50%);
+
+  &.active {
+    width: 24px;
+    height: 24px;
+    border: 1px solid white;
+    mix-blend-mode: normal;
+    background-color: transparent;
+  }
+
+  &.hidden {
+    opacity: 0;
+    background: transparent;
+    border: 1px solid white;
+  }
+
+  &.transparent {
+    background-color: red;
+  }
 }
 
 .key-tip {

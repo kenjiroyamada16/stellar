@@ -555,7 +555,7 @@ export const lines: IStoryLine[] = [
   {
     id: 78,
     kind: LineKinds.line,
-    text: 'Talvez você mereça isso.### Talvez você não queira minha ajuda.##### Mas sei que você pode querer se fazer valer a pena.',
+    text: 'Talvez você mereça isso.### Talvez você não queira minha ajuda.##### Mas você tem uma chance de se fazer valer a pena.',
     nextLineId: 79,
     talker: 'Estrela',
   },
@@ -1031,7 +1031,7 @@ export const lines: IStoryLine[] = [
   {
     id: 148,
     kind: LineKinds.line,
-    text: 'Finalmente posso ser alguém. ######Finalmente serei eu mesma.######### +, a estrela. Você não sabe o quanto estou feliz.%',
+    text: 'Finalmente me sinto alguém. ######Finalmente serei eu mesma.######### +. Você não sabe o quanto estou feliz.%',
     nextLineId: 149,
     talker: 'star_name',
   },
@@ -1063,13 +1063,13 @@ export const lines: IStoryLine[] = [
   {
     id: 153,
     kind: LineKinds.narrative,
-    text: 'Em algum tempo, ela já fazia parte do meu dia todo, todos os dias.',
+    text: 'Em pouco tempo, ela já fazia parte do meu dia todo, todos os dias.',
     nextLineId: 154,
   },
   {
     id: 154,
     kind: LineKinds.narrative,
-    text: 'Os mesmos meus dias.####### Os quais eu, antes, preferia não ver mais.',
+    text: 'Os mesmos meus dias.####### Os quais eu, antes, preferia não vivenciar mais.',
     nextLineId: 155,
   },
   {
@@ -1081,13 +1081,13 @@ export const lines: IStoryLine[] = [
   {
     id: 156,
     kind: LineKinds.narrative,
-    text: 'Afinal, isso é viver:',
+    text: 'E descobri###### que isso é viver:',
     nextLineId: 157,
   },
   {
     id: 157,
     kind: LineKinds.narrative,
-    text: 'Suportar a vida.############### Até encontrar aquilo que torna a mesma suportável.##############@O que a torna digna de ser vivida.',
+    text: 'Suportar a vida.############### Até encontrar aquilo que torna a mesma suportável.##############@Aquilo que a torna digna de ser vivida.',
     nextLineId: 158,
   },
   {
@@ -1112,7 +1112,7 @@ export const lines: IStoryLine[] = [
   {
     id: 161,
     kind: LineKinds.title,
-    text: 'Eu precisava que você me acolhesse.',
+    text: 'Eu só precisava de você.',
     nextLineId: 162,
   },
   {
